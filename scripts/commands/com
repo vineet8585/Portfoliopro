@@ -1,0 +1,18 @@
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\start-mysql-api.ps1
+
+cd .\frontend
+.\node_modules\.bin\ng.cmd serve --host 127.0.0.1 --port 4300 --proxy-config proxy.conf.json
+
+
+“My project is PortfolioPro, a stock market paper-trading and portfolio management system. 
+The frontend is developed using Angular and the backend uses Java Spring Boot REST APIs.
+ First, the user registers and logs in. 
+ Authentication is handled using Spring Security and JWT.
+  After login, the user can search for stocks and view market information obtained through a market-data API.
+   The user can add stocks to a watchlist and perform simulated buy and sell transactions.
+    These transactions are stored in MySQL using JPA and Hibernate.
+     The system updates the user's holdings and calculates portfolio value and profit or loss.
+      It also provides transaction history and can perform technical and portfolio-level analysis.
+       Since it is a paper-trading system, no real money or brokerage transaction is involved.”
+
+       

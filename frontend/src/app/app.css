@@ -1,0 +1,5 @@
+.account-chip { min-width: 0; }
+.account-chip > span:nth-child(2) { flex: 1; overflow: hidden; }
+.account-chip strong, .account-chip small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account-signout { width: 28px; height: 28px; flex: 0 0 auto; border: 1px solid #2c3b43; border-radius: 7px; background: #121d24; color: #9eafb5; cursor: pointer; font-size: 14px; }
+.account-signout:hover { border-color: #557866; color: #a9e7c6; }

@@ -1,0 +1,73 @@
+<main class="auth-page">
+  <section class="auth-story" aria-label="PortfolioPro paper trading workspace">
+    <a class="auth-brand" routerLink="/login" aria-label="PortfolioPro sign in">
+      <img src="/portfolio-mark.svg" alt="" width="38" height="38" />
+      <span>PortfolioPro<small>MARKET WORKSPACE</small></span>
+    </a>
+
+    <div class="story-copy">
+      <span class="story-kicker"><i></i> YOUR MARKET WORKSPACE</span>
+      <h1>Make room<br />for better <em>decisions.</em></h1>
+      <p>Explore market signals, build a paper portfolio, and learn by doing. Sign in whenever you want to return to your research workspace.</p>
+    </div>
+
+    <div class="story-visual" aria-hidden="true">
+      <div class="visual-caption"><span>PORTFOLIO PRACTICE</span><span>SIMULATED</span></div>
+      <div class="visual-value">$24,680<span>Illustrative account value</span></div>
+      <div class="visual-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="visual-axis"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span></div>
+      <div class="visual-foot"><span>Cash balance</span><strong>$8,420</strong><span class="visual-divider"></span><span>Positions</span><strong>06</strong></div>
+    </div>
+    <p class="story-disclaimer">Illustrative sample data. No live prices or brokerage orders.</p>
+  </section>
+
+  <section class="auth-form-side">
+    <div class="mobile-brand"><img src="/portfolio-mark.svg" alt="" width="34" height="34" /><strong>PortfolioPro</strong></div>
+    <div class="auth-form-wrap">
+      <div class="form-heading">
+        <span class="form-eyebrow">{{ mode() === 'login' ? 'WELCOME BACK' : 'START YOUR WORKSPACE' }}</span>
+        <h2>{{ mode() === 'login' ? 'Sign in to your account' : 'Create your account' }}</h2>
+        <p>{{ mode() === 'login' ? 'Your paper portfolio is right where you left it.' : 'One account for your research and paper portfolio.' }}</p>
+      </div>
+
+      <div class="mode-switch" role="tablist" aria-label="Account access">
+        <button type="button" role="tab" [attr.aria-selected]="mode() === 'login'" [class.selected]="mode() === 'login'" (click)="setMode('login')">Sign in</button>
+        <button type="button" role="tab" [attr.aria-selected]="mode() === 'signup'" [class.selected]="mode() === 'signup'" (click)="setMode('signup')">Create account</button>
+      </div>
+
+      <form (ngSubmit)="submit()" #authForm="ngForm">
+        @if (mode() === 'signup') {
+          <label class="field-label" for="full-name">Full name</label>
+          <input id="full-name" name="name" type="text" autocomplete="name" placeholder="Your name" maxlength="100" required [(ngModel)]="nameValue" />
+        }
+
+        <label class="field-label" for="email">Email address</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="191" required [(ngModel)]="emailValue" />
+
+        <div class="password-label"><label class="field-label" for="password">Password</label>@if (mode() === 'signup') { <span>8 characters minimum</span> }</div>
+        <input id="password" name="password" type="password" [attr.autocomplete]="mode() === 'login' ? 'current-password' : 'new-password'" [attr.minlength]="mode() === 'signup' ? 8 : null" maxlength="128" required [(ngModel)]="passwordValue" />
+
+        @if (mode() === 'signup') {
+          <label class="field-label confirm-label" for="confirm-password">Confirm password</label>
+          <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" required [(ngModel)]="confirmPasswordValue" />
+        }
+
+        @if (error()) { <p class="form-error" role="alert">{{ error() }}</p> }
+
+        <button class="submit-button" type="submit" [disabled]="authForm.invalid || busy()">
+          @if (busy()) { <span class="button-spinner" aria-hidden="true"></span> }
+          {{ busy() ? 'Please wait…' : mode() === 'login' ? 'Sign in' : 'Create account' }}
+          @if (!busy()) { <span aria-hidden="true">→</span> }
+        </button>
+      </form>
+
+      <p class="form-switch-copy">
+        {{ mode() === 'login' ? 'New to PortfolioPro?' : 'Already have an account?' }}
+        <button type="button" (click)="setMode(mode() === 'login' ? 'signup' : 'login')">{{ mode() === 'login' ? 'Create an account' : 'Sign in' }}</button>
+      </p>
+
+      <div class="security-note"><span class="lock-mark" aria-hidden="true">▣</span><span>Your password is encrypted before it is stored. Sessions use a secure, private cookie.</span></div>
+    </div>
+    <footer class="auth-footer"><span>PORTFOLIOPRO PAPER</span><span>Practice only · No real trades</span></footer>
+  </section>
+</main>

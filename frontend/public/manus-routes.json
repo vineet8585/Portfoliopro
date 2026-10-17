@@ -1,0 +1,11 @@
+{
+  "routes": [
+    { "path": "/", "title": "PortfolioPro" },
+    { "path": "/overview", "title": "Portfolio overview" },
+    { "path": "/portfolio", "title": "Portfolio" },
+    { "path": "/markets", "title": "Markets" },
+    { "path": "/analysis", "title": "Technical and fundamental analysis" },
+    { "path": "/risk", "title": "Portfolio risk" },
+    { "path": "/orders", "title": "Paper order activity" }
+  ]
+}

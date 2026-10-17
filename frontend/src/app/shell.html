@@ -1,0 +1,68 @@
+@if (authScreen()) {
+  <router-outlet />
+} @else {
+<div class="portfolio-app">
+  <aside class="desktop-sidebar">
+    <a class="brand-lockup" routerLink="/overview" aria-label="PortfolioPro overview">
+      <img src="/portfolio-mark.svg" alt="" width="36" height="36" />
+      <span class="brand-name">PortfolioPro<small>MARKET WORKSPACE</small></span>
+    </a>
+
+    <div class="market-badge"><span class="status-dot"></span><span>MARKET SNAPSHOT</span><strong>DEMO</strong></div>
+
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <span class="nav-caption">WORKSPACE</span>
+      @for (item of navigation; track item.path) {
+        <a class="nav-link" [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="nav-glyph">{{ item.code }}</span><span class="nav-label">{{ item.label }}</span><span class="nav-chevron">›</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+    <section class="sidebar-account">
+      <div class="sidebar-account-head"><span>YOUR PAPER ACCOUNT</span><span class="pill-soft">LOCAL</span></div>
+      <strong class="sidebar-value">{{ money(portfolio.totalValue()) }}</strong>
+      <div class="sidebar-subline"><span>Buying power</span><span>{{ money(portfolio.buyingPower()) }}</span></div>
+      <button type="button" class="button button-sidebar" (click)="openTicket()"><span>+</span> New paper order</button>
+    </section>
+
+    <div class="sidebar-footnote"><span class="footnote-mark">i</span><span>Practice workspace.<br />No broker is connected.</span></div>
+    <div class="account-chip"><span class="avatar">{{ auth.user()?.name?.slice(0, 2)?.toUpperCase() || 'PP' }}</span><span><strong>{{ auth.user()?.name || 'Investor' }}</strong><small>{{ auth.user()?.email || 'Personal paper account' }}</small></span><button type="button" class="account-signout" (click)="signOut()" aria-label="Sign out" title="Sign out">↗</button></div>
+  </aside>
+
+  <section class="workspace-column">
+    <header class="topbar">
+      <div class="mobile-brand"><img src="/portfolio-mark.svg" alt="" width="30" height="30" /><strong>PortfolioPro</strong></div>
+      <div class="topbar-context"><span class="eyebrow">INVESTMENT WORKSPACE</span><span class="topbar-caption">Research. Practice. Review.</span></div>
+      <label class="global-search">
+        <span class="search-glyph" aria-hidden="true">⌕</span>
+        <input #symbolSearch type="search" autocomplete="off" aria-label="Search markets" placeholder="Search symbol or company" [value]="searchTerm" (input)="onSearchInput($event)" (keydown.enter)="goToSearch()" />
+        <kbd>⌘ K</kbd>
+      </label>
+      <div class="market-status"><span class="status-dot"></span><span><strong>LIVE FEED</strong><small>Streaming demo</small></span></div>
+      <button type="button" class="button button-primary topbar-order" (click)="openTicket()"><span>+</span> New paper order</button>
+    </header>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      @for (item of navigation; track item.path) {
+        <a class="mobile-nav-link" [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><span>{{ item.code }}</span>{{ item.label }}</a>
+      }
+      <button type="button" class="mobile-nav-signout" (click)="signOut()">↗ Sign out</button>
+    </nav>
+
+    <main class="main-content">
+      @if (market.errorMessage()) {
+        <div class="system-notice" role="status"><span class="notice-dot"></span><span>{{ market.errorMessage() }} Paper trades remain local to this browser.</span></div>
+      }
+      @if (portfolio.persistenceWarning()) {
+        <div class="system-notice notice-warn" role="status"><span class="notice-dot"></span><span>{{ portfolio.persistenceWarning() }}</span></div>
+      }
+      <router-outlet />
+      <footer class="global-disclaimer"><span>PortfolioPro Paper</span><span>Illustrative data only · Not investment advice · No real orders are sent</span></footer>
+    </main>
+  </section>
+</div>
+
+@if (portfolio.ticketOpen()) { <pp-order-ticket /> }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "portfoliopro",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.18.0",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "pnpm --filter portfoliopro-frontend start",
+    "dev:api": "cd backend && PORT=${API_PORT:-8081} ./mvnw -B spring-boot:run -Dspring-boot.run.fork=false",
+    "build:web": "pnpm --filter portfoliopro-frontend build",
+    "build": "pnpm run build:web && cd backend && ./mvnw -B -DskipTests package",
+    "check:web": "pnpm --filter portfoliopro-frontend build",
+    "check:api": "cd backend && ./mvnw -B test",
+    "check": "pnpm run check:web && pnpm run check:api",
+    "test": "pnpm --filter portfoliopro-frontend test && pnpm run check:api"
+  }
+}
